@@ -27,6 +27,8 @@ struct Constant_String {
     public static let DEVICE_NAME  = UIDevice.current.systemName
     
     public static let No_Friend_To_Display = "No friend to display"
+    public static let No_Result_To_Display = "No Result to display"
+   public static let None = "None"
 }
 
 
@@ -76,6 +78,17 @@ struct URL_NAME {
     public static let clubList = "clubList"
     public static let add_lottery_ticket = "add_lottery_ticket"
     public static let ticket_detail = "ticket_detail"
+    public static let lottery_result = "lottery_result"
+    public static let announcement = "announcement"
+//    public static let
+//    public static let
+//    public static let
+//    public static let
+//    public static let
+//    public static let
+//    public static let
+//    public static let
+//    public static let
     
     
     

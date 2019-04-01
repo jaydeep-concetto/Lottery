@@ -9,7 +9,7 @@
 import UIKit
 class cellAddFriendVCList:UITableViewCell
 {
-    
+    @IBOutlet weak var imgProfilePic: UIImageView!
     @IBOutlet weak var lblGive: UILabel!
     @IBOutlet weak var lblGet: UILabel!
     @IBOutlet weak var lblName: UILabel!
@@ -34,11 +34,50 @@ class AddFriendVC: BaseViewController {
     var arrAF:[[String:Any]] = [[String:Any]]()
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+     getfriend()
       
 
     }
-    
+    func getfriend() {
+        postapi(url: URL_NAME.friend_list, maindict:["user_id":users.id]) { (dict) in
+            self.arrTbl = [[String:Any]]()
+            self.arrAF = [[String:Any]]()
+            self.arrWF = [[String:Any]]()
+            self.arrFL = [[String:Any]]()
+            if dict.count != 0
+            {
+                let ta = (dict["data"] as? [[String:Any]] ?? [])
+                for a in ta
+                {
+                    if (a["type"] as? String ?? "") == "Add Friend"
+                    {
+                        if (a["agree_reject_status"] as? String ?? "") != "0"
+                        {
+                        self.arrAF.append(a)
+                        }
+                    }
+                    else if (a["type"] as? String ?? "") == "WhatsApp Friend"
+                    {
+                        self.arrWF.append(a)
+                    }
+                    else
+                    {
+                        self.arrFL.append(a)
+                    }
+                }
+                switch self.selectedTopIndex {
+                case 2:
+                    self.arrTbl = self.arrAF
+                case 1:
+                    self.arrTbl = self.arrFL
+                default:
+                    self.arrTbl = self.arrWF
+                }
+                self.tableView.reloadData()
+            }
+            self.lblSubTotal.text = "\(self.arrTbl.count)"
+        }
+    }
 }
 
 //MARK: actions
@@ -69,11 +108,14 @@ extension AddFriendVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellAddFriendVCList", for: indexPath) as! cellAddFriendVCList
-       
+      
         cell.btnGet.isSelected = (selectedTopIndex == 2) ? true : false
         cell.btnGive.isSelected = (selectedTopIndex == 2) ? true : false
         cell.lblGet.text = (selectedTopIndex == 2) ? "AGREE" : "GET"
         cell.lblGive.text = (selectedTopIndex == 2) ? "REJECT" : "GIVE"
+        cell.lblName.text = (arrTbl[indexPath.row]["friend_detail"] as? [String:Any] ?? [:])["name"] as? String ?? ""
+        cell.imgProfilePic.kf.indicatorType = .activity
+        cell.imgProfilePic.kf.setImage(with:  URL(string: (arrTbl[indexPath.row]["friend_detail"] as? [String:Any] ?? [:])["profile_pic"] as? String ?? ""))
         return cell
     }
 }
@@ -90,17 +132,10 @@ extension AddFriendVC: UICollectionViewDataSource, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             lblAllGet.text = (indexPath.row == 2) ? "ALL AGREE" : "ALL GET"
             lblAllGive.text = (indexPath.row == 2) ? "ALL REJECT" : "ALL GIVE"
-        switch indexPath.row {
-        case 2:
-            arrTbl = arrAF
-        case 1:
-            arrTbl = arrFL
-        default:
-            arrTbl = arrWF
-        }
+       
         
         selectedTopIndex = indexPath.row
-        tableView.reloadData()
+        getfriend()
         collectionView.reloadData()
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

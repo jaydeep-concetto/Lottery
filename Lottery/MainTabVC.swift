@@ -15,12 +15,12 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
         if ((tabBarController.viewControllers?.count)! > tabBarController.selectedIndex )
         {
             let b = tabBarController.viewControllers![tabBarController.selectedIndex] as! UINavigationController
-            if tabBarController.selectedIndex == 2 && UserDefaults.standard.value(forKey: "isResultSeen") != nil
+            if tabBarController.selectedIndex == 3 && UserDefaults.standard.value(forKey: "isResultSeen") != nil
             {
                  let SecondVC = self.storyboard?.instantiateViewController(withIdentifier: "ResultDetailVC") as! ResultDetailVC
                 b.setViewControllers([SecondVC], animated: false)
             }
-            else if tabBarController.selectedIndex == 3 && UserDefaults.standard.value(forKey: "isListLotterySeen") != nil
+            else if tabBarController.selectedIndex == 2 && UserDefaults.standard.value(forKey: "isListLotterySeen") != nil
             {
                 let SecondVC = self.storyboard?.instantiateViewController(withIdentifier: "LotteryPreview1VC") as! LotteryPreview1VC
                 b.setViewControllers([SecondVC], animated: false)
@@ -34,12 +34,16 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
         let tabbar:UITabBar = self.tabBar
-        let tabbaritem5:UITabBarItem = tabbar.items![4]
         
         if viewController is ProfileNC
         {
             tabbar.items![4].image = UIImage(named: "ic_user_active.png")?.withRenderingMode(.alwaysOriginal)
-            self.tabBar.tintColor = UIColor.white
+         
+            
+            tabbar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)], for: .normal)
+            self.tabBar.tintColor = UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)
+          //  self.tabBar.tintColor = UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)
             let objPopup = self.storyboard?.instantiateViewController(withIdentifier: "ProfileNC") as! ProfileNC
             objPopup.modalTransitionStyle = .crossDissolve
             objPopup.modalPresentationStyle = .overFullScreen
@@ -51,6 +55,8 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
             self.tabBar.tintColor = UIColor.init(red: 235/255.0
                 , green: 91/255.0, blue: 51/255.0, alpha: 1)
             tabbar.items![4].image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
+            tabbar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
             //  tabbaritem5.image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
             return true
         }
@@ -61,14 +67,23 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
         self.tabBar.tintColor = UIColor.init(red: 235/255.0
             , green: 91/255.0, blue: 51/255.0, alpha: 1)
         self.tabBar.items![4].image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
+        
+        self.tabBar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+            , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(setToPeru(notification:)), name: Notification.Name("peru"), object: nil)
-        imgArr = ["ic_home","ic_message","ic_check","ic_list","ic_user"]
+        imgArr = ["ic_home","ic_message","ic_list","ic_check","ic_user"]
         self.delegate = self
         for i in 0..<imgArr.count {
             self.tabBar.items?[i].image = UIImage(named: imgArr[i]+".png")?.withRenderingMode(.alwaysOriginal)
+          
+        }
+        let tempArr = users.name.components(separatedBy: " ")
+        if tempArr.count != 0
+        {
+        self.tabBar.items?[4].title = tempArr[0]
         }
         //        let ic_home = #imageLiteral(resourceName: "ic_home").withRenderingMode(.alwaysOriginal)
         //        let ic_home_active = #imageLiteral(resourceName: "ic_home_active").withRenderingMode(.alwaysOriginal)

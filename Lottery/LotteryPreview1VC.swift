@@ -45,7 +45,7 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
             lblTitle.text = arrTitle[arrTitleIndex]["title"]
             btnScan.setTitle(arrTitle[arrTitleIndex]["btn"], for: .normal)
             let vc = UIImagePickerController()
-            vc.sourceType = .camera
+            vc.sourceType = .photoLibrary
             vc.allowsEditing = false
             vc.delegate = self
             present(vc, animated: true)
@@ -64,7 +64,7 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
         {
             mainDict = arrLotteryType[selectLotteryType]
             let vc = UIImagePickerController()
-            vc.sourceType = .camera
+            vc.sourceType = .photoLibrary
             vc.allowsEditing = false
             vc.delegate = self
             present(vc, animated: true)
@@ -353,7 +353,7 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
                 lblTitle.text = arrTitle[arrTitleIndex]["title"]
                 btnScan.setTitle(arrTitle[arrTitleIndex]["btn"], for: .normal)
                 let vc = UIImagePickerController()
-                vc.sourceType = .camera
+                vc.sourceType = .photoLibrary
                 vc.allowsEditing = false
                 vc.delegate = self
                 present(vc, animated: true)

@@ -280,7 +280,26 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         noDataLabel.textAlignment = .center
         return noDataLabel
     }
-    
+    func noDataView1(str:String,fr:CGRect) -> UILabel {
+        let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: fr.size.width, height: fr.size.height))
+        noDataLabel.font = UIFont.systemFont(ofSize: 13.0)
+        noDataLabel.text          = str
+        noDataLabel.textColor     = UIColor.lightGray
+        noDataLabel.backgroundColor = UIColor.white
+        noDataLabel.textAlignment = .center
+        return noDataLabel
+    }
+    func noDataView2(str:String,fr:CGRect) -> UIView {
+        let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 222, width: fr.size.width, height: fr.size.height-222))
+        noDataLabel.font = UIFont.systemFont(ofSize: 13.0)
+        noDataLabel.text          = str
+        noDataLabel.textColor     = UIColor.lightGray
+        noDataLabel.backgroundColor = UIColor.white
+        noDataLabel.textAlignment = .center
+         let noDataLabel1: UIView     = UIView(frame: CGRect(x: 0, y: 0, width: fr.size.width, height: fr.size.height))
+        noDataLabel1.addSubview(noDataLabel)
+        return noDataLabel1
+    }
     func backgroundpostapi(url:String,maindict:Dictionary<String,Any>, withcalllback callback: @escaping (_ response: Dictionary<String,Any>) -> Void)
     {
         
@@ -321,8 +340,16 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
                         callback(JSON)
                     }
                     else if response.response?.statusCode ?? 0 == 400 && JSON["errors"] != nil && ((JSON["errors"] as? [String])?.count != 0){
-                        self.showAlertWithTitle(title: Constant_String.APP_NAME, string: (JSON["errors"] as! [String])[0] )
+                        if JSON["errors"] is String
+                        {
+                        self.showAlertWithTitle(title: Constant_String.APP_NAME, string: (JSON["errors"] as! String))
                         callback([:])
+                        }
+                        else
+                        {
+                            self.showAlertWithTitle(title: Constant_String.APP_NAME, string: (JSON["errors"] as! [String])[0] )
+                            callback([:])
+                        }
                     }
                     else {
 
@@ -571,5 +598,19 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         
         return "\(hours):\(minutes):\(seconds)"
        
+    }
+    func convertDatehh(str:String) -> String
+    {
+        let df:DateFormatter = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let hourMinuteSecond: Set<Calendar.Component> = [.hour, .minute, .second]
+        let difference = NSCalendar.current.dateComponents(hourMinuteSecond, from:df.date(from: str)! , to: Date());
+        
+       
+        let hours = difference.hour ?? 0
+        
+        
+        return "\(hours)"
+        
     }
 }

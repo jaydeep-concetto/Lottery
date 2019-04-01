@@ -108,7 +108,7 @@ extension MailBoxVC: UITableViewDelegate, UITableViewDataSource{
         case "Love Committee":
             cell.imgChip.image = UIImage(named: "heart")
         case "Reward Committee":
-            cell.imgChip.image = UIImage(named: "chipe")
+            cell.imgChip.image = UIImage(named: "chip_bg_gray")
            
         default:
             cell.imgChip.image = UIImage(named: "cone")

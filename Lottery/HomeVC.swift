@@ -8,8 +8,18 @@
 
 import UIKit
 import MarqueeLabel
-class HomeVC: BaseViewController {
+class HomeVC: BaseViewController,FilterVCDelegate {
+    func setData(selectedShare1: String, selectedSort1: String, selectedPosted1: String, arrSelectedTypesOfLottery1: String) {
+        selectedShare = selectedShare1
+        selectedSort = selectedSort1
+        selectedPosted = selectedPosted1
+        arrSelectedTypesOfLottery = arrSelectedTypesOfLottery1
+    }
     
+    var selectedShare : String = ""
+    var selectedSort : String = "DES"
+    var selectedPosted : String = "AL"
+    var arrSelectedTypesOfLottery : String = ""
     @IBOutlet weak var lblMarquee: MarqueeLabel!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,11 +28,42 @@ class HomeVC: BaseViewController {
     
     @IBOutlet weak var viewBaseForTable: UIView!
     override func viewWillAppear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden=false
-       
+         self.tabBarController?.tabBar.isHidden=false
+       getAnnounce()
         getClubList()
     }
-    
+    func getNo(s:String) -> String
+    {
+        switch s {
+        case "1":
+            return "1st"
+        case "2":
+            return "2nd"
+        case "3":
+            return "3rd"
+        default:
+            return "\(s)th"
+        }
+    }
+    func getAnnounce()
+    {
+        backgroundpostapi(url: URL_NAME.announcement, maindict:[:]) { (dict) in
+          
+            if dict.count != 0
+            {
+                let arrud = dict["data"] as? [[String:Any]] ?? []
+               
+                var ts:String = " Congratulations!"
+                for i in arrud
+                {
+                    ts = "\(ts) \(((i["user_detail"] as? [String:Any] ?? [:])["name"] as? String ?? "")) have won \(self.getNo(s: i["user_rank"] as? String ?? "")) for \(((i["lottery_detail"] as? [String:Any] ?? [:])["name"] as? String ?? ""))"
+                }
+                ts = "\(ts)."
+                self.lblMarquee.text = ts
+                self.lblMarquee.scrollDuration = 7
+            }
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
     @IBAction func btnListLotterypress(_ sender: Any) {
         if ((tabBarController!.viewControllers?.count)! > 4 )
@@ -54,7 +95,7 @@ class HomeVC: BaseViewController {
         
         arrSearchImages.append(#imageLiteral(resourceName: "ic_search"))
         arrSearchImages.append(#imageLiteral(resourceName: "ic_usa_flag"))
-        arrSearchImages.append(#imageLiteral(resourceName: "ic_add_user"))
+        arrSearchImages.append(#imageLiteral(resourceName: "add_user"))
         self.collectionViewStaticOptions.reloadData()
 //        arrSearchImages.append(#imageLiteral(resourceName: "ic_tv"))
 //        arrSearchImages.append(#imageLiteral(resourceName: "ic_sport"))
@@ -63,7 +104,7 @@ class HomeVC: BaseViewController {
     }
     func getClubList() {
       
-        postapi(url: URL_NAME.clubListFilter, maindict:["user_id":users.id]) { (dict) in
+        postapi(url: URL_NAME.clubListFilter, maindict:["user_id":users.id,"lottery_id":arrSelectedTypesOfLottery,"share":selectedShare,"posted":selectedPosted,"sortBy":selectedSort]) { (dict) in
              self.getLotteryType()
             if dict.count != 0
             {
@@ -72,6 +113,11 @@ class HomeVC: BaseViewController {
                 {
                 self.arrClubList.append(a)
                 }
+                self.tableView.reloadData()
+            }
+            else
+            {
+                self.arrClubList.removeAll()
                 self.tableView.reloadData()
             }
         }
@@ -145,6 +191,12 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             else if indexPath.item == 0{
                 let objPopup = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
                 objPopup.arrTypesOfLottery = arrHeaderImages
+                objPopup.selectedShare = selectedShare
+                objPopup.selectedSort = selectedSort
+                objPopup.selectedPosted = selectedPosted
+                objPopup.arrSelectedTypesOfLottery = arrSelectedTypesOfLottery
+                objPopup.delegate = self
+                
                 self.present(objPopup, animated: true, completion: nil)
             }
         }
@@ -175,10 +227,23 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate{
         cell.lblClubWon.text = "\((arrClubList[indexPath.row]["share%"] as? String ?? ""))%"
         cell.lblJoined.text = "\((arrClubList[indexPath.row]["total_members"] as? String ?? ""))/\((arrClubList[indexPath.row]["join_limit"] as? String ?? ""))"
         cell.lblDeadLine.text = convertDatehhMMss(str:arrClubList[indexPath.row]["lottery_result_date"] as? String ?? "")
-        if indexPath.item < 3{
+        if Int(convertDatehh(str:arrClubList[indexPath.row]["lottery_result_date"] as? String ?? ""))! < 1{
+            cell.lblDeadLine.textColor = UIColor.init(hex: "ff0000", alpha: 1)
             cell.imgShape.isHidden = false
+            cell.contentView.backgroundColor =   UIColor.init(hex: "438352", alpha: 0.3)
         }
-        cell.imgShape.isHidden = true
+        else if Int(convertDatehh(str:arrClubList[indexPath.row]["lottery_result_date"] as? String ?? ""))! < 24{
+            cell.lblDeadLine.textColor = UIColor.init(hex: "003399", alpha: 1)
+            cell.imgShape.isHidden = false
+            cell.contentView.backgroundColor =   UIColor.init(hex: "438352", alpha: 0.3)
+        }
+        else
+        {
+            cell.imgShape.isHidden = true
+            cell.contentView.backgroundColor =   UIColor.init(hex: "ffffff", alpha: 1)
+            cell.lblDeadLine.textColor = UIColor.init(hex: "000000", alpha: 1)
+        }
+      //  cell.imgShape.isHidden = true
         return cell
     }
     

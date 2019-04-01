@@ -123,8 +123,8 @@ class LotteryPreview3VC: BaseViewController,UITableViewDelegate, UITableViewData
         pickerViewfollow.pickerViewStyle = .wheel
         pickerViewfollow.maskDisabled = false
         pickerViewfollow.reloadData()
-        btnOverseasClicked(self.view.viewWithTag(4001) as! UIButton)
-        btnClubJoinClicked(self.view.viewWithTag(3001) as! UIButton)
+        btnOverseasClicked(self.view.viewWithTag(4002) as! UIButton)
+        btnClubJoinClicked(self.view.viewWithTag(3002) as! UIButton)
         btnDayClicked(self.view.viewWithTag(2001) as! UIButton)
         btnShareClicked(self.view.viewWithTag(1001) as! UIButton)
         
