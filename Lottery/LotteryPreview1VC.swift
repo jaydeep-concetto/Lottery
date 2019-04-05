@@ -10,11 +10,8 @@ import UIKit
 import Firebase
 class LotteryPreviewOneCell:UITableViewCell {
     
-    @IBOutlet weak var lblAmount: UILabel!
     @IBOutlet weak var lblLtteryName: UILabel!
-    @IBOutlet weak var lblCountry: UILabel!
-    @IBOutlet weak var lblDate: UILabel!
-    @IBOutlet weak var imgLottery: UIImageView!
+   @IBOutlet weak var imgLottery: UIImageView!
 }
 class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
     var selectLotteryType:Int = -1
@@ -52,23 +49,11 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
         }
     }
     @IBAction func btnCancelClick(_ sender: Any) {
-        self.tabBarController?.selectedIndex = 0
+        self.dismiss(animated: false, completion: nil)
     }
-    @IBAction func btnContinueClick(_ sender: Any) {
-        if selectLotteryType == -1
-        {
-            
-            self.view.makeToast("Select Any Lottery Type", duration: 2, position:CGPoint(x:self.view.frame.size.width/2,y:self.view.frame.size.height-80))
-        }
-        else
-        {
-            mainDict = arrLotteryType[selectLotteryType]
-            let vc = UIImagePickerController()
-            vc.sourceType = .photoLibrary
-            vc.allowsEditing = false
-            vc.delegate = self
-            present(vc, animated: true)
-        }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+      //  self.dismiss(animated: false, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
@@ -78,6 +63,10 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
             return
         }
         viewLotteryType.isHidden = true
+        self.view.viewWithTag(1001)?.isHidden = false
+        self.view.viewWithTag(1002)?.isHidden = false
+        self.view.viewWithTag(1003)?.isHidden = false
+self.view.backgroundColor = UIColor.white
         imgLottery = LyEditImageView(frame:CGRect(x: 0, y: 0, width: imgLotterySuperView.frame.size.width, height: imgLotterySuperView.frame.size.height))
         imgLottery.initWithImage(image: image)
         for i in self.imgLotterySuperView.subviews
@@ -133,8 +122,8 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
     }
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        conTblHeight.constant = CGFloat((arrLotteryType.count == 0) ? 60 : arrLotteryType.count*75)
-        conTblHeight.constant = CGFloat((conTblHeight.constant > self.view.frame.size.height-300) ? (self.view.frame.size.height-300) : conTblHeight.constant)
+        conTblHeight.constant = CGFloat((arrLotteryType.count == 0) ? 60 : arrLotteryType.count*70)
+        conTblHeight.constant = CGFloat((conTblHeight.constant > self.view.frame.size.height-150) ? (self.view.frame.size.height-150) : conTblHeight.constant)
         tableView.backgroundView  = (arrLotteryType.count == 0) ? noDataView(str: Constant_String.No_Friend_To_Display,tableView: tableView) : nil
         return (arrLotteryType.count == 0) ? 0 : 1
     }
@@ -148,40 +137,24 @@ class LotteryPreview1VC: BaseViewController,UITableViewDelegate, UITableViewData
         cell.imgLottery.kf.indicatorType = .activity
         cell.imgLottery.kf.setImage(with:  URL(string: arrLotteryType[indexPath.row]["image"] as? String ?? ""))
         var b = NSMutableAttributedString()
-        b = cell.lblAmount.attributedText as! NSMutableAttributedString
-        b.mutableString.setString("$\(arrLotteryType[indexPath.row]["amount"] as? String ?? "")")
-        cell.lblAmount.attributedText = b
         
-        b = cell.lblCountry.attributedText as! NSMutableAttributedString
-        b.mutableString.setString( arrLotteryType[indexPath.row]["country"] as? String ?? "")
-        cell.lblCountry.attributedText = b
         
         b = cell.lblLtteryName.attributedText as! NSMutableAttributedString
         b.mutableString.setString(arrLotteryType[indexPath.row]["name"] as? String ?? "")
         cell.lblLtteryName.attributedText = b
         
-        
-        b = cell.lblDate.attributedText as! NSMutableAttributedString
-        b.mutableString.setString((arrLotteryType[indexPath.row]["result_date"] as? String ?? "").replacingOccurrences(of: " ", with: "\n"))
-        cell.lblDate.attributedText = b
+      
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        for i in 0..<arrLotteryType.count {
-            
-            let cell = tableView.cellForRow(at: IndexPath.init(row: i, section: indexPath.section))
-            if i == indexPath.row
-            {
-                
-                cell?.contentView.backgroundColor = selectLotteryType == i ? UIColor.init(hex: "ffffff", alpha: 1) :  UIColor.init(hex: "438352", alpha: 0.3)
-                
-            }
-            else
-            {
-                cell?.contentView.backgroundColor =  UIColor.init(hex: "ffffff", alpha: 1)
-            }
-        }
-        selectLotteryType = selectLotteryType == indexPath.row ? -1 : indexPath.row
+        
+        selectLotteryType = indexPath.row
+        mainDict = arrLotteryType[selectLotteryType]
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.allowsEditing = false
+        vc.delegate = self
+        present(vc, animated: true)
     }
     func recognizeText(img:UIImage)
     {

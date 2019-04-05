@@ -172,7 +172,7 @@ extension FilterVC: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TypesOfLotteryCell", for: indexPath) as! TypesOfLotteryCell
-        cell.imgView.image = UIImage(named: "ic_flag_\((arrTypesOfLottery[indexPath.row]["country"] as? String ?? ""))")
+        cell.imgView.image = UIImage(named: "flag_\((arrTypesOfLottery[indexPath.row]["country"] as? String ?? ""))")
         cell.lblTitle.text = (arrTypesOfLottery[indexPath.row]["name"] as! String)
         cell.lblTitle.textColor = (arrTypesOfLottery[indexPath.row]["id"] as! String) == arrSelectedTypesOfLottery ? UIColor.init(hex: "fd5d0f") : UIColor.init(hex: "000000")
         return cell

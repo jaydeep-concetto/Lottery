@@ -38,31 +38,31 @@ class AccountVC: BaseViewController {
     }
     func getArray()  {
         let objUser = List()
-        objUser.listIcon = #imageLiteral(resourceName: "user")
+        objUser.listIcon = #imageLiteral(resourceName: "ac_user")
         objUser.title = "Contact info"
         objUser.isSwitch = false
         arraList.append(objUser)
         
         let objPaid = List()
-        objPaid.listIcon = #imageLiteral(resourceName: "paid")
+        objPaid.listIcon = #imageLiteral(resourceName: "ac_paid")
         objPaid.title = "Paid member"
         objPaid.isSwitch = false
         arraList.append(objPaid)
         
         let objNotification = List()
-        objNotification.listIcon = #imageLiteral(resourceName: "notification")
+        objNotification.listIcon = #imageLiteral(resourceName: "ac_notification")
         objNotification.title = "Notification setting"
         objNotification.isSwitch = false
         arraList.append(objNotification)
         
         let objDollar = List()
-        objDollar.listIcon = #imageLiteral(resourceName: "dollar")
+        objDollar.listIcon = #imageLiteral(resourceName: "ac_dollar")
         objDollar.title = "Track your money"
         objDollar.isSwitch = false
         arraList.append(objDollar)
         
         let objAd = List()
-        objAd.listIcon = #imageLiteral(resourceName: "ad")
+        objAd.listIcon = #imageLiteral(resourceName: "ac_ad")
         objAd.title = "Ad for guide"
         objAd.isSwitch = true
         arraList.append(objAd)

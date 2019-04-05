@@ -10,6 +10,7 @@ import UIKit
 
 class MainTabVC: UITabBarController,UITabBarControllerDelegate{
     var imgArr :[String] = [String]()
+   
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController)
     {
         if ((tabBarController.viewControllers?.count)! > tabBarController.selectedIndex )
@@ -20,11 +21,11 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
                  let SecondVC = self.storyboard?.instantiateViewController(withIdentifier: "ResultDetailVC") as! ResultDetailVC
                 b.setViewControllers([SecondVC], animated: false)
             }
-            else if tabBarController.selectedIndex == 2 && UserDefaults.standard.value(forKey: "isListLotterySeen") != nil
-            {
-                let SecondVC = self.storyboard?.instantiateViewController(withIdentifier: "LotteryPreview1VC") as! LotteryPreview1VC
-                b.setViewControllers([SecondVC], animated: false)
-            }
+//            else if tabBarController.selectedIndex == 2 && UserDefaults.standard.value(forKey: "isListLotterySeen") != nil
+//            {
+//                let SecondVC = self.storyboard?.instantiateViewController(withIdentifier: "LotteryPreview1VC") as! LotteryPreview1VC
+//                b.setViewControllers([SecondVC], animated: false)
+//            }
             else
             {
             b.popToRootViewController(animated: false)
@@ -35,16 +36,33 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
         
         let tabbar:UITabBar = self.tabBar
         
-        if viewController is ProfileNC
+        if viewController is ProfileVC
         {
-            tabbar.items![4].image = UIImage(named: "ic_user_active.png")?.withRenderingMode(.alwaysOriginal)
-         
+        tabbar.items![2].image = UIImage(named: "ic_list.png")?.withRenderingMode(.alwaysOriginal)
             
             tabbar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)], for: .normal)
+            tabbar.items![2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
             self.tabBar.tintColor = UIColor.init(red: 199/255.0
                 , green: 199/255.0, blue: 205/255.0, alpha: 1)
           //  self.tabBar.tintColor = UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)
-            let objPopup = self.storyboard?.instantiateViewController(withIdentifier: "ProfileNC") as! ProfileNC
+            let objPopup = self.storyboard?.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileVC
+            objPopup.modalTransitionStyle = .crossDissolve
+            objPopup.modalPresentationStyle = .overFullScreen
+            (tabBarController.viewControllers![tabBarController.selectedIndex] as! UINavigationController).present(objPopup, animated: true, completion: nil)
+            return false
+        }
+        else if viewController is LotteryPreview1VC
+        {
+                tabbar.items![2].image = UIImage(named: "ic_list_active.png")?.withRenderingMode(.alwaysOriginal)
+            
+            tabbar.items![2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)], for: .normal)
+            tabbar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
+            self.tabBar.tintColor = UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)
+            //  self.tabBar.tintColor = UIColor.init(red: 253/255.0, green: 93/255.0, blue: 15/255.0, alpha: 1)
+            let objPopup = self.storyboard?.instantiateViewController(withIdentifier: "LotteryPreview1VC") as! LotteryPreview1VC
             objPopup.modalTransitionStyle = .crossDissolve
             objPopup.modalPresentationStyle = .overFullScreen
             (tabBarController.viewControllers![tabBarController.selectedIndex] as! UINavigationController).present(objPopup, animated: true, completion: nil)
@@ -52,12 +70,13 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
         }
         else
         {
+            tabbar.items![2].image = UIImage(named: "ic_list.png")?.withRenderingMode(.alwaysOriginal)
             self.tabBar.tintColor = UIColor.init(red: 235/255.0
                 , green: 91/255.0, blue: 51/255.0, alpha: 1)
-            tabbar.items![4].image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
             tabbar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
                 , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
-            //  tabbaritem5.image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
+            tabbar.items![2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+                , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
             return true
         }
     }
@@ -66,17 +85,39 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
     @objc func setToPeru(notification: NSNotification) {
         self.tabBar.tintColor = UIColor.init(red: 235/255.0
             , green: 91/255.0, blue: 51/255.0, alpha: 1)
-        self.tabBar.items![4].image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
-        
+      //  self.tabBar.items![4].image = UIImage(named: "ic_user.png")?.withRenderingMode(.alwaysOriginal)
+     
         self.tabBar.items![4].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
             , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
+    }
+    @objc func setToPeru2(notification: NSNotification) {
+        self.tabBar.tintColor = UIColor.init(red: 235/255.0
+            , green: 91/255.0, blue: 51/255.0, alpha: 1)
+          self.tabBar.items![2].image = UIImage(named: "ic_list.png")?.withRenderingMode(.alwaysOriginal)
+        
+        self.tabBar.items![2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.init(red: 199/255.0
+            , green: 199/255.0, blue: 205/255.0, alpha: 1)], for: .normal)
+    }
+    @objc func setToPeru1(notification: NSNotification) {
+        let t:UIImageView = UIImageView()
+        
+        t.kf.setImage(with: URL(string: users.profile_pic), placeholder: nil, options: nil, progressBlock: { (a, b) in
+            
+        }) { (img, error,cac, a) in
+            if img != nil
+            {
+            self.tabBar.items![4].image = self.maskRoundedImage(image: img!).withRenderingMode(.alwaysOriginal)
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(setToPeru(notification:)), name: Notification.Name("peru"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setToPeru1(notification:)), name: Notification.Name("peru1"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setToPeru2(notification:)), name: Notification.Name("peru2"), object: nil)
         imgArr = ["ic_home","ic_message","ic_list","ic_check","ic_user"]
         self.delegate = self
-        for i in 0..<imgArr.count {
+        for i in 0..<imgArr.count-1 {
             self.tabBar.items?[i].image = UIImage(named: imgArr[i]+".png")?.withRenderingMode(.alwaysOriginal)
           
         }
@@ -85,33 +126,32 @@ class MainTabVC: UITabBarController,UITabBarControllerDelegate{
         {
         self.tabBar.items?[4].title = tempArr[0]
         }
-        //        let ic_home = #imageLiteral(resourceName: "ic_home").withRenderingMode(.alwaysOriginal)
-        //        let ic_home_active = #imageLiteral(resourceName: "ic_home_active").withRenderingMode(.alwaysOriginal)
-        //        let ic_message = #imageLiteral(resourceName: "ic_message").withRenderingMode(.alwaysOriginal)
-        //        let ic_message_active = #imageLiteral(resourceName: "ic_message_active").withRenderingMode(.alwaysOriginal)
-        //        let ic_check = #imageLiteral(resourceName: "ic_check").withRenderingMode(.alwaysOriginal)
-        //        let ic_check_active = #imageLiteral(resourceName: "ic_check_active").withRenderingMode(.alwaysOriginal)
-        //        let ic_list = #imageLiteral(resourceName: "ic_list").withRenderingMode(.alwaysOriginal)
-        //        let ic_list_active = #imageLiteral(resourceName: "ic_list_active").withRenderingMode(.alwaysOriginal)
-        //        let ic_user = #imageLiteral(resourceName: "ic_user").withRenderingMode(.alwaysOriginal)
-        //        let ic_user_active = #imageLiteral(resourceName: "ic_user_active").withRenderingMode(.alwaysOriginal)
-        //
-        //        var item1 = self.tabBar.items?[0]
-        //        item1 = UITabBarItem(title: "", image: ic_home, selectedImage: ic_home_active)
-        //
-        //        var item2 = self.tabBar.items?[1]
-        //        item2 = UITabBarItem(title: "", image: ic_message, selectedImage: ic_message_active)
-        //
-        //
-        //        var item3 = self.tabBar.items?[2]
-        //        item3 = UITabBarItem(title: "", image: ic_check, selectedImage: ic_check_active)
-        //
-        //        var item4 = self.tabBar.items?[3]
-        //        item4 = UITabBarItem(title: "", image: ic_list, selectedImage: ic_list_active)
-        //
-        //        var item5 = self.tabBar.items?[4]
-        //        item5 = UITabBarItem(title: "", image: ic_user, selectedImage: ic_user_active)
+        let t:UIImageView = UIImageView()
+        
+        t.kf.setImage(with: URL(string: users.profile_pic), placeholder: nil, options: nil, progressBlock: { (a, b) in
+            
+        }) { (img, error,cac, a) in
+            if img != nil
+            {
+            self.tabBar.items![4].image = self.maskRoundedImage(image: img!).withRenderingMode(.alwaysOriginal)
+            }
+        }
+        
+
     }
-    
+    func maskRoundedImage(image: UIImage) -> UIImage {
+        let imageView: UIImageView = UIImageView(image: image)
+        let layer = imageView.layer
+        layer.masksToBounds = true
+        layer.cornerRadius = 16
+        imageView.contentMode = .scaleAspectFill
+imageView.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage!
+    }
+  
     
 }

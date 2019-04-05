@@ -42,7 +42,6 @@
 		63B23D6822271DF10057E65D /* GloriaHallelujah.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63B23D6322271DF00057E65D /* GloriaHallelujah.ttf */; };
 		63B23D6922271DF10057E65D /* EBGaramond.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63B23D6422271DF00057E65D /* EBGaramond.ttf */; };
 		63B23D6A22271DF10057E65D /* HomemadeApple.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63B23D6522271DF00057E65D /* HomemadeApple.ttf */; };
-		63C3D38B2222CF1D00248A7C /* ProfileNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3D38A2222CF1A00248A7C /* ProfileNC.swift */; };
 		63C3D38D2222FEA200248A7C /* Group 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C3D38C2222FE9E00248A7C /* Group 1.png */; };
 		63C507742210351A00AEC332 /* WinningRewardPopupTwoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C507712210351900AEC332 /* WinningRewardPopupTwoVC.swift */; };
 		63C507752210351A00AEC332 /* WinningRewardPopupOneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C507722210351900AEC332 /* WinningRewardPopupOneVC.swift */; };
@@ -173,7 +172,6 @@
 		63B23D6322271DF00057E65D /* GloriaHallelujah.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GloriaHallelujah.ttf; sourceTree = "<group>"; };
 		63B23D6422271DF00057E65D /* EBGaramond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EBGaramond.ttf; sourceTree = "<group>"; };
 		63B23D6522271DF00057E65D /* HomemadeApple.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HomemadeApple.ttf; sourceTree = "<group>"; };
-		63C3D38A2222CF1A00248A7C /* ProfileNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNC.swift; sourceTree = "<group>"; };
 		63C3D38C2222FE9E00248A7C /* Group 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Group 1.png"; sourceTree = "<group>"; };
 		63C507712210351900AEC332 /* WinningRewardPopupTwoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinningRewardPopupTwoVC.swift; sourceTree = "<group>"; };
 		63C507722210351900AEC332 /* WinningRewardPopupOneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinningRewardPopupOneVC.swift; sourceTree = "<group>"; };
@@ -383,7 +381,6 @@
 				63F2A7BE220FE0D300645688 /* Commons */,
 				63F2A78E220FDFD800645688 /* AppDelegate.swift */,
 				63EB23192211EAF300665EBD /* MainTabVC.swift */,
-				63C3D38A2222CF1A00248A7C /* ProfileNC.swift */,
 				63F2A7BC220FE09E00645688 /* HomeVC.swift */,
 				63DAB390220FF5E900AE0C11 /* ShareSportVC.swift */,
 				63DAB392220FF5F600AE0C11 /* FilterVC.swift */,
@@ -875,7 +872,6 @@
 				63EB231C2211F73200665EBD /* ListLotteryVC.swift in Sources */,
 				630213902210AACF002F1356 /* TrackYourMoneyVC.swift in Sources */,
 				63F2A7DE220FE0D300645688 /* NSArray+Extension.swift in Sources */,
-				63C3D38B2222CF1D00248A7C /* ProfileNC.swift in Sources */,
 				63A07E8A2217E6D100CDF363 /* SignupVC.swift in Sources */,
 				63F2A78F220FDFD800645688 /* AppDelegate.swift in Sources */,
 				6347306A2223C30200A177D2 /* UserDetail.swift in Sources */,

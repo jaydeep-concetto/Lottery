@@ -156,6 +156,7 @@ class ProfileVC: BaseViewController,UIImagePickerControllerDelegate,UINavigation
                     }
                     users.profile_pic = (dict["data"] as! Dictionary<String, String>) ["profile_pic"]!
                     self.imgProfile.image = image
+                NotificationCenter.default.post(name: Notification.Name("peru1"), object: nil)
                 }
             
             }

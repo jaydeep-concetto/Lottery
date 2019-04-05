@@ -584,12 +584,20 @@ class BaseViewController: UIViewController,UITextFieldDelegate {
         df1.dateFormat = "MMM d"
         return df1.string(from: df.date(from: str)!)
     }
+    func convertDateyyyyMMdd(str:String) -> String
+    {
+        let df:DateFormatter = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let df1:DateFormatter = DateFormatter()
+        df1.dateFormat = "yyyy-MM-dd"
+        return df1.string(from: df.date(from: str)!)
+    }
     func convertDatehhMMss(str:String) -> String
     {
         let df:DateFormatter = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let hourMinuteSecond: Set<Calendar.Component> = [.hour, .minute, .second]
-        let difference = NSCalendar.current.dateComponents(hourMinuteSecond, from:df.date(from: str)! , to: Date());
+        let difference = NSCalendar.current.dateComponents(hourMinuteSecond, from:Date() , to:df.date(from: str)! );
         
         let seconds = difference.second ?? 0
         let minutes = difference.minute ?? 0

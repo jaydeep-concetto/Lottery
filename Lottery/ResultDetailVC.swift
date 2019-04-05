@@ -59,7 +59,7 @@ var arrPastLotteryNo:[[String:Any]] = [[String:Any]]()
     }
     func getResult() {
         
-        postapi(url: URL_NAME.lottery_result, maindict:["user_id":users.id]) { (dict) in
+        postapi(url: URL_NAME.lottery_result, maindict:["user_id":users.id,"type":"LR"]) { (dict) in
             if dict.count != 0
             {
                 self.arrMain = (dict["data"] as? [String:Any] ?? [:])["lottery_type_list"] as? [[String:Any]] ?? []

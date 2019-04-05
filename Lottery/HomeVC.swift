@@ -93,12 +93,12 @@ class HomeVC: BaseViewController,FilterVCDelegate {
 
        
         
-        arrSearchImages.append(#imageLiteral(resourceName: "ic_search"))
+        arrSearchImages.append(#imageLiteral(resourceName: "search"))
         arrSearchImages.append(#imageLiteral(resourceName: "ic_usa_flag"))
         arrSearchImages.append(#imageLiteral(resourceName: "add_user"))
         self.collectionViewStaticOptions.reloadData()
-//        arrSearchImages.append(#imageLiteral(resourceName: "ic_tv"))
-//        arrSearchImages.append(#imageLiteral(resourceName: "ic_sport"))
+//        arrSearchImages.append(#imageLiteral(resourceName: "tv"))
+//        arrSearchImages.append(#imageLiteral(resourceName: "sport_bg_orange"))
       
        
     }
